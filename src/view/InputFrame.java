@@ -19,12 +19,15 @@ public class InputFrame extends Frame{
 
     @Override
     protected void show() {
-
+           showLine();
     }
 
     @Override
     protected void clear() {
     
+    }
+    private void showLine(){
+        
     }
     
 }

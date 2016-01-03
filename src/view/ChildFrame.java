@@ -23,6 +23,7 @@ public class ChildFrame extends Frame {
     @Override
     protected void show() {
         showBorders();
+        showText();
     }
 
     @Override
@@ -38,7 +39,10 @@ public class ChildFrame extends Frame {
         Writer.printHorizontalLine(y1, x1, x2);
         Writer.printHorizontalLine(y2, x1, x2);
         Writer.printVerticalLine(x1, y1, y2);
-        Writer.printVerticalLine(x2, y1, y2);
+        Writer.printVerticalLine(x2, y1, y2);   
+    }
+    private void showText(){
+       
     }
     
 }

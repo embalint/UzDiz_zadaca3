@@ -23,9 +23,15 @@ public class ParentFrame extends Frame{
     private List<ChildFrame> childrens;
     private InputFrame inputFrame;
     
-    public ParentFrame(Settings settings, int mode) {
+    public ParentFrame(Settings settings, String mode) {
         super(settings);
-        this.MODE=mode;
+        if (mode.equals("V")){
+            this.MODE=VERTICAL;
+        }
+        else{
+            this.MODE=HORIZONTAL;
+        }
+        
         childrens=new ArrayList<ChildFrame>();
         clear();
         generateChildrens();
