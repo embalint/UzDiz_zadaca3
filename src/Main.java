@@ -1,8 +1,7 @@
 
-import controller.Controller;
-import model.Model;
+import registry.Registry;
 import utils.Settings;
-import view.ParentFrame;
+import view.FrameFactory;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,9 +19,12 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        ParentFrame view = new ParentFrame(new Settings(1, 1, 25, 50), ParentFrame.HORIZONTAL);
-        Model model = new Model();
-        Controller controller = new Controller(view, model);
+        Settings settings = new Settings(1, 1, 30, 100, "V", 2);
+        Registry.getInstance().set("app.settings", settings);
+        Registry.getInstance().set("frame.factory", new FrameFactory((Settings) Registry.getInstance().get("app.settings")));
+
+        Application app = new Application(settings);
+        app.start();
 
     }
 

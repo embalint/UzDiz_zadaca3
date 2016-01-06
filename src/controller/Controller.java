@@ -5,43 +5,30 @@
  */
 package controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Model;
-import view.ParentFrame;
+import registry.Registry;
+import utils.Settings;
+import view.Frame;
 
 /**
  *
  * @author ahuskano
  */
-public class Controller {
-    
-    private ParentFrame view;
-    private Model model;
+public class Controller implements Runnable {
 
-    public Controller() {
+    protected Object get(String key) {
+        return Registry.getInstance().get(key);
     }
 
-    
-    public Controller(ParentFrame view, Model model) {
-        this.view = view;
-        this.model = model;
+    public void work() {
+
     }
 
-    public ParentFrame getView() {
-        return view;
+    @Override
+    public void run() {
+        work();
     }
 
-    public void setView(ParentFrame view) {
-        this.view = view;
-    }
-
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-    
-    
-    
 }
