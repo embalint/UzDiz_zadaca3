@@ -11,12 +11,19 @@ package utils;
  */
 public class InputArgs {
     
-    String rowNumber ;
-    String columnNumber ;
-    String screenView ;
-    String filePath ;
-    int seconds;
+    private String rowNumber ;
+    private String columnNumber ;
+    private String screenView ;
+    private String filePath ;
+    private int seconds;
 
+    public InputArgs(String [] args) {
+        this.rowNumber = args[0];
+        this.columnNumber = args[1];
+        this.screenView = args[2];
+        this.filePath = args[3];
+        this.seconds = Integer.parseInt(args[4]);
+    }
     public int getSeconds() {
         return seconds;
     }
