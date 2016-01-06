@@ -5,8 +5,6 @@ package utils;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 /**
  *
  * @author Nikolina
@@ -17,7 +15,7 @@ public class ArgumentValidator {
 
     public ArgumentValidator(String[] arguments) {
         this.arguments = arguments;
-       // Validation();
+        // Validation();
     }
 
     public boolean Validation() {
@@ -52,20 +50,20 @@ public class ArgumentValidator {
             System.err.println("Number of column must be digit! (80 - 160)");
             validation = false;
         }
-        
+
         try {
             String screen = arguments[2];
             if (!screen.equals("V")) {
-                 if (!screen.equals("O")) {
+                if (!screen.equals("O")) {
                     System.err.println("Invalid input for screen orientation ");
                     validation = false;
-                 }
+                }
             }
         } catch (Exception e) {
             System.err.println("U can only enter V or O for screen oritentation");
             validation = false;
         }
-        
+
         //seconds validation
         try {
             int secondsNumber = Integer.parseInt(arguments[4]);
@@ -77,7 +75,7 @@ public class ArgumentValidator {
             System.err.println("Number of seconds must be digit! (1 - 120)");
             validation = false;
         }
-        
+
         return validation;
     }
 }
