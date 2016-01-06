@@ -35,13 +35,8 @@ public class Main {
 
         if (val.Validation() == true) {
 
-            InputArgs arg = new InputArgs();
-            arg.setRowNumber(args[0]);
-            arg.setColumnNumber(args[1]);
-            arg.setScreenView(args[2]);
-            arg.setFilePath(args[3]);
-            arg.setSeconds(Integer.parseInt(args[4]));
-
+            InputArgs arg = new InputArgs(args);
+          
             FileSystemScanner file = new FileSystemScanner(arg.getFilePath());
             ParentFrame view = new ParentFrame(new Settings(1, 1, 25, 50), arg.getScreenView());
             Model model = new Model();
