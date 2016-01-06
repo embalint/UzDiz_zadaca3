@@ -14,6 +14,16 @@ public class InputArgs {
     String rowNumber ;
     String columnNumber ;
     String screenView ;
+    String filePath ;
+    int seconds;
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
 
     public String getRowNumber() {
         return rowNumber;
@@ -46,5 +56,5 @@ public class InputArgs {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    String filePath ;
+    
 }
