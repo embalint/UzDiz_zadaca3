@@ -26,11 +26,12 @@ public class ViewController extends Controller {
     @Override
     public void work() {
 
-        inputFrame.render();
-
         for (Frame f : outputFrames) {
             f.render();
         }
+
+        inputFrame.render();
+
     }
 
 }

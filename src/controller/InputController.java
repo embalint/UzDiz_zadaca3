@@ -26,6 +26,7 @@ public class InputController extends Controller {
 
         do {
 
+            Writer.resetPosition();
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 

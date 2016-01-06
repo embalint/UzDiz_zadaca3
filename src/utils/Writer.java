@@ -53,8 +53,10 @@ public class Writer {
     }
 
     public static void printInFrame(Frame frame, ArrayList<String> content) {
+
+        int line = 0;
         for (String s : content) {
-            print(s, frame.getSettings().getX() + 1, frame.getSettings().getY() + 1);
+            print(s, frame.getSettings().getX() + 1, frame.getSettings().getY() + 1 + line++);
         }
     }
 

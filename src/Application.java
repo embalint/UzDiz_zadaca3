@@ -42,8 +42,12 @@ public class Application {
         Thread uiThread = new Thread(new ViewController(), "thread.view");
         uiThread.start();
 
-        Thread.sleep(1);
-        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         InputController ctl = new InputController();
         ctl.work();
 

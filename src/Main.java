@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Settings settings = new Settings(1, 1, 30, 100, "V", 2);
+        Settings settings = new Settings(1, 1, 30, 100, "O", 2);
         Registry.getInstance().set("app.settings", settings);
         Registry.getInstance().set("frame.factory", new FrameFactory((Settings) Registry.getInstance().get("app.settings")));
 
