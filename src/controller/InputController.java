@@ -16,8 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Model;
 import registry.Registry;
+import scanner.FileScanner;
 import scanner.FileSystemScannerAtributes;
 import utils.Reader;
+import utils.Settings;
 import utils.Writer;
 
 /**
@@ -25,6 +27,12 @@ import utils.Writer;
  * @author ahuskano
  */
 public class InputController extends Controller {
+
+    private Settings settings;
+
+    public InputController(Settings settings) {
+        this.settings = settings;
+    }
 
     public void work() {
         String choice = "";
@@ -35,36 +43,48 @@ public class InputController extends Controller {
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
-            if (choice.equals("2")) {
-                ArrayList<String> buffer = new ArrayList<>();
-                File actual = new File((String) this.get("filepath"));
-                for (File f : actual.listFiles()) {
+            switch (choice) {
+                case "1":
 
-                    BasicFileAttributes attributes;
-                    try {
-                        attributes = Files.readAttributes(Paths.get(f.getPath()), BasicFileAttributes.class);
+                    break;
 
-                        FileTime creTime = attributes.creationTime();
-                        FileSystemScannerAtributes attr = new FileSystemScannerAtributes();
+                case "2":
+                        FileScanner scann = new FileScanner();
+                        scann.work();
+                    break;
 
-                        attr.setFileSize(attributes.size());
-                        attr.setCreationTime(creTime.toString());
-                        attr.setFileName(f.getName());
-                        attr.setModifiedTime(attributes.lastModifiedTime().toString());
-                        attr.setFiletype(Files.probeContentType(Paths.get(f.getPath())));
+                case "3":
+                    while (true) {
+                        Thread uiThread = new Thread(new FileScanner(), "thread.scann");
+                        uiThread.start();
 
-                        buffer.add(attr.toString());
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(InputController.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            Thread.sleep(settings.getRefreshInterval() * 1000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(InputController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
 
-                }
+                case "4":
+                    break;
 
-                ((Model) Registry.getInstance().get("model.structure")).setBuffer(buffer);
+                case "5":
+                    break;
+
+                case "6":
+                    break;
+
+                case "7":
+                    break;
+
+                case "8":
+                    break;
+
+                case "9":
+                    break;
+
             }
-
-        } while (choice != "0");
+        } while (choice != "Q");
 
     }
 

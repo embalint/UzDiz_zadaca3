@@ -48,7 +48,7 @@ public class Application {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        InputController ctl = new InputController();
+        InputController ctl = new InputController(settings);
         ctl.work();
 
     }
