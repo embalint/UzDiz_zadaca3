@@ -3,12 +3,24 @@ package scanner;
 /**
  * @author Emil
  */
-public class FileSystemScannerAtributes {
+public class FileAtributes {
 
-    String creationTime;
-    String fileName;
-    String filetype;
-    Long fileSize;
+    private String creationTime;
+    private String fileName;
+    private String filetype;
+    private Long fileSize;
+    private String modifiedTime;
+
+    public FileAtributes() {
+    }
+
+    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime) {
+        this.creationTime = creationTime;
+        this.fileName = fileName;
+        this.filetype = filetype;
+        this.fileSize = fileSize;
+        this.modifiedTime = modifiedTime;
+    }
 
     public String getModifiedTime() {
         return modifiedTime;
@@ -17,7 +29,6 @@ public class FileSystemScannerAtributes {
     public void setModifiedTime(String modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
-    String modifiedTime;
 
     public String getCreationTime() {
         return creationTime;
@@ -53,7 +64,8 @@ public class FileSystemScannerAtributes {
 
     @Override
     public String toString() {
-        return "FileSystemScannerAtributes{" + "creationTime=" + creationTime + ", fileName=" + fileName + ", filetype=" + filetype + ", fileSize=" + fileSize + ", modifiedTime=" + modifiedTime + '}';
+                return "File " + fileName + '}';
+//        return "FileSystemScannerAtributes{" + "creationTime=" + creationTime + ", fileName=" + fileName + ", filetype=" + filetype + ", fileSize=" + fileSize + ", modifiedTime=" + modifiedTime + '}';
     }
     
 
