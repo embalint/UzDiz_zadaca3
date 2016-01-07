@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Model;
 import registry.Registry;
 import utils.Writer;
@@ -26,8 +24,8 @@ public class ViewController extends Controller {
         Writer.writerNextPosition = inputFrame.getWriterStartPosition();
 
         this.outputFrames.add(factory.makeFrame(1, (Model) this.get("model.structure")));
-        //this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.info")));
-        this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.structure")));
+        this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.info")));
+        //this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.structure")));
 
     }
 

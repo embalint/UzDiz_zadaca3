@@ -36,6 +36,7 @@ public class InputController extends Controller {
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
+            boolean flag;
             switch (choice) {
                 case "1":
                     break;
@@ -49,12 +50,14 @@ public class InputController extends Controller {
                 case "3":
                     // Set scan flag
                     Registry.getInstance().set("thread.scan.active", true);
-                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread activated");
+                    flag = (boolean) Registry.getInstance().get("thread.scan.active");
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread active: " + flag);
                     break;
 
                 case "4":
                     Registry.getInstance().set("thread.scan.active", false);
-                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread de-activated");
+                    flag = (boolean) Registry.getInstance().get("thread.scan.active");
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread active: " + flag);
                     break;
 
                 case "5":

@@ -42,11 +42,11 @@ public class Application {
     public void start() {
 
         setup();
-
+        
         Thread uiThread = new Thread(new ViewController(), "thread.view");
         uiThread.start();
 
-        Thread scanThread = new Thread(new FileScanController(), "thread.scann");
+        Thread scanThread = new Thread(new FileScanController(), "thread.scan");
         scanThread.start();
 
         try {

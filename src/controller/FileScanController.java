@@ -19,26 +19,32 @@ public class FileScanController extends Controller {
 
         FileScanner fs = new FileScanner();
 
-        boolean flag = (boolean) this.get("thread.scan.active");
-        if (flag) {
+        while (true) {
+            boolean flag = (boolean) this.get("thread.scan.active");
 
-            ArrayList<String> fileList = fs.getFileList();
-            ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+            if (flag) {
 
-            try {
-                Thread.sleep(((Settings) this.get("app.settings")).getRefreshInterval() * 1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FileScanController.class.getName()).log(Level.SEVERE, null, ex);
+                ((Model) Registry.getInstance().get("model.info")).setString("Scan started");
+
+                ArrayList<String> fileList = fs.getFileList();
+                ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                ((Model) Registry.getInstance().get("model.info")).setString("Scan finished");
+
+                try {
+                    Thread.sleep(((Settings) this.get("app.settings")).getRefreshInterval() * 1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FileScanController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FileScanController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
-
-        } else {
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FileScanController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
         }
 
     }
