@@ -21,6 +21,7 @@ import scanner.FileSystemScannerAtributes;
 import utils.Reader;
 import utils.Settings;
 import utils.Writer;
+import view.Frame;
 
 /**
  *
@@ -39,6 +40,7 @@ public class InputController extends Controller {
 
         do {
 
+            Writer.clear((Frame) this.get("frame.input"));
             Writer.resetPosition();
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
