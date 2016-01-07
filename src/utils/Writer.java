@@ -78,7 +78,7 @@ public class Writer {
                 Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if (startLine + 1 > frame.getSettings().getHeight()) {
+            if (startLine + 1 >= frame.getSettings().getY() + 1 + frame.getSettings().getHeight()) {
                 line = 0;
                 clear(frame);
             } else {
