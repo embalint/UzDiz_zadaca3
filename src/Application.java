@@ -1,10 +1,12 @@
 
+import controller.FileScanController;
 import controller.InputController;
 import controller.ViewController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Model;
 import registry.Registry;
+import scanner.FileScanner;
 import utils.Settings;
 import view.Frame;
 import view.FrameFactory;
@@ -29,6 +31,8 @@ public class Application {
     private void setup() {
         Registry.getInstance().set("model.structure", new Model());
         Registry.getInstance().set("model.info", new Model());
+        Registry.getInstance().set("thread.scan.active", false);
+
     }
 
     private Object get(String key) {
@@ -41,6 +45,9 @@ public class Application {
 
         Thread uiThread = new Thread(new ViewController(), "thread.view");
         uiThread.start();
+
+        Thread scanThread = new Thread(new FileScanController(), "thread.scann");
+        scanThread.start();
 
         try {
             Thread.sleep(1000);

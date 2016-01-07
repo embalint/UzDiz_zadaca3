@@ -5,7 +5,6 @@
  */
 package scanner;
 
-import controller.Controller;
 import controller.InputController;
 import java.io.File;
 import java.io.IOException;
@@ -18,19 +17,17 @@ import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Model;
 import registry.Registry;
 
 /**
  *
  * @author Emil
  */
-public class FileScanner extends Controller {
+public class FileScanner {
 
-    File actual = new File((String) this.get("filepath"));
+    File actual = new File((String) Registry.getInstance().get("filepath"));
 
-    @Override
-    public void work() {
+    public ArrayList<String> getFileList() {
 
         ArrayList<String> buffer = new ArrayList<>();
 
@@ -56,8 +53,7 @@ public class FileScanner extends Controller {
             }
 
         }
-
-        ((Model) Registry.getInstance().get("model.structure")).setBuffer(buffer);
+        return buffer;
 
     }
 

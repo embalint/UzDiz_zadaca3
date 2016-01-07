@@ -5,19 +5,10 @@
  */
 package controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Model;
 import registry.Registry;
 import scanner.FileScanner;
-import scanner.FileSystemScannerAtributes;
 import utils.Reader;
 import utils.Settings;
 import utils.Writer;
@@ -47,27 +38,23 @@ public class InputController extends Controller {
 
             switch (choice) {
                 case "1":
-
                     break;
 
                 case "2":
-                        FileScanner scann = new FileScanner();
-                        scann.work();
+                    FileScanner fs = new FileScanner();
+                    ArrayList<String> fileList = fs.getFileList();
+                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                     break;
 
                 case "3":
-                    while (true) {
-                        Thread uiThread = new Thread(new FileScanner(), "thread.scann");
-                        uiThread.start();
-
-                        try {
-                            Thread.sleep(settings.getRefreshInterval() * 1000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(InputController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+                    // Set scan flag
+                    Registry.getInstance().set("thread.scan.active", true);
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread activated");
+                    break;
 
                 case "4":
+                    Registry.getInstance().set("thread.scan.active", false);
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread de-activated");
                     break;
 
                 case "5":
