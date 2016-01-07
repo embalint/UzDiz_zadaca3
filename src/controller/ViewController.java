@@ -17,6 +17,8 @@ public class ViewController extends Controller {
 
     public ViewController() {
 
+        Writer.clear();
+        
         FrameFactory factory = (FrameFactory) this.get("frame.factory");
 
         inputFrame = factory.makeInputFrame();
