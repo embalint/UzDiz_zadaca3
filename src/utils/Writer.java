@@ -6,6 +6,8 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Pos;
 import view.Frame;
 import view.Position;
@@ -55,18 +57,59 @@ public class Writer {
     public static void printInFrame(Frame frame, ArrayList<String> content) {
 
         int line = 0;
+
+        ArrayList<String> splitContent = new ArrayList<>();
+
         for (String s : content) {
-            print(s, frame.getSettings().getX() + 1, frame.getSettings().getY() + 1 + line++);
+            String[] arr = s.split("(?<=\\G.{" + (frame.getSettings().getWidth() - 1) + "})");
+            for (int i = 0; i < arr.length; i++) {
+                splitContent.add(arr[i]);
+            }
+
+        }
+
+        for (String s : splitContent) {
+            int startLine = frame.getSettings().getY() + 1 + line;
+            print(s, frame.getSettings().getX() + 1, startLine);
+
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (startLine + 1 > frame.getSettings().getHeight()) {
+                line = 0;
+                clear(frame);
+            } else {
+                line++;
+            }
+
         }
     }
 
-    public static void clear(int x, int y) {
-        if (x > 2) {
-            // Delete till end  
+    public static void clearToCursor() {
+        System.out.print(ANSI_ESC + "1K");
+    }
 
-        } else {
-            // Delete to cursor
+    public static void clearFromCursor() {
+        System.out.print(ANSI_ESC + "K");
+    }
 
+    public static void clear(Frame frame) {
+        for (int i = frame.getSettings().getY(); i < frame.getSettings().getY() + frame.getSettings().getHeight(); i++) {
+
+            if (frame.getSettings().getX() > 1) {
+                // Delete till end
+                position(frame.getSettings().getX(), i);
+                clearFromCursor();
+            } else {
+                // Delete to cursor
+                position(frame.getSettings().getX() + frame.getSettings().getWidth(), i);
+                clearToCursor();
+            }
+
+            frame.showBorders();
         }
     }
 
