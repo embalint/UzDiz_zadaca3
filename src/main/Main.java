@@ -68,7 +68,7 @@ public class Main {
                         break;
 
                     case "2":
-                        file.returntDir();
+                        file.returntSubDir();
                         for (int i = 0; i < scannerList.size(); i++) {
 
                             System.out.println("Naziv : " + scannerList.get(i).getFileName());
