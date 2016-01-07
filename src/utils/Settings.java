@@ -30,7 +30,7 @@ public class Settings {
         this.y = y;
         this.height = height + 1;
         this.width = width + 1;
-        this.mode = (mode == "O" ? this.OKOMITO : this.VODORAVNO);
+        this.mode = (mode.equals("O") ? this.OKOMITO : this.VODORAVNO);
         this.refreshInterval = refreshInterval;
     }
 

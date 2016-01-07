@@ -5,19 +5,12 @@
  */
 package controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Model;
 import registry.Registry;
-import scanner.FileSystemScannerAtributes;
+import scanner.FileScanner;
 import utils.Reader;
+import utils.Settings;
 import utils.Writer;
 import view.Frame;
 
@@ -26,6 +19,12 @@ import view.Frame;
  * @author ahuskano
  */
 public class InputController extends Controller {
+
+    private Settings settings;
+
+    public InputController(Settings settings) {
+        this.settings = settings;
+    }
 
     public void work() {
         String choice = "";
@@ -37,36 +36,44 @@ public class InputController extends Controller {
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
-            if (choice.equals("2")) {
-                ArrayList<String> buffer = new ArrayList<>();
-                File actual = new File((String) this.get("filepath"));
-                for (File f : actual.listFiles()) {
+            switch (choice) {
+                case "1":
+                    break;
 
-                    BasicFileAttributes attributes;
-                    try {
-                        attributes = Files.readAttributes(Paths.get(f.getPath()), BasicFileAttributes.class);
+                case "2":
+                    FileScanner fs = new FileScanner();
+                    ArrayList<String> fileList = fs.getFileList();
+                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                    break;
 
-                        FileTime creTime = attributes.creationTime();
-                        FileSystemScannerAtributes attr = new FileSystemScannerAtributes();
+                case "3":
+                    // Set scan flag
+                    Registry.getInstance().set("thread.scan.active", true);
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread activated");
+                    break;
 
-                        attr.setFileSize(attributes.size());
-                        attr.setCreationTime(creTime.toString());
-                        attr.setFileName(f.getName());
-                        attr.setModifiedTime(attributes.lastModifiedTime().toString());
-                        attr.setFiletype(Files.probeContentType(Paths.get(f.getPath())));
+                case "4":
+                    Registry.getInstance().set("thread.scan.active", false);
+                    ((Model) Registry.getInstance().get("model.info")).setString("Scan thread de-activated");
+                    break;
 
-                        buffer.add(attr.toString());
+                case "5":
+                    break;
 
-                    } catch (IOException ex) {
-                        Logger.getLogger(InputController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                case "6":
+                    break;
 
-                }
+                case "7":
+                    break;
 
-                ((Model) Registry.getInstance().get("model.structure")).setBuffer(buffer);
+                case "8":
+                    break;
+
+                case "9":
+                    break;
+
             }
-
-        } while (choice != "0");
+        } while (choice != "Q");
 
     }
 
