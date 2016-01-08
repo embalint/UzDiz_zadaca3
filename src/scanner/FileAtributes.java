@@ -2,9 +2,12 @@ package scanner;
 
 import iterator.ItemContainer;
 import iterator.Iterator;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import utils.Writer;
 
 /**
@@ -14,7 +17,7 @@ public class FileAtributes {
 
     private static String separate = "  ";
 
-    private String creationTime;
+    private long creationTime;
     private String fileName;
     private String filetype;
     private String modifiedTime;
@@ -27,7 +30,7 @@ public class FileAtributes {
     public FileAtributes() {
     }
 
-    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, List<FileAtributes> childrens) {
+    public FileAtributes(long creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, List<FileAtributes> childrens) {
         this.creationTime = creationTime;
         this.fileName = fileName;
         this.filetype = filetype;
@@ -37,7 +40,7 @@ public class FileAtributes {
         container.addItems(childrens);
     }
 
-    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, int level) {
+    public FileAtributes(long creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, int level) {
         this.creationTime = creationTime;
         this.fileName = fileName;
         this.filetype = filetype;
@@ -63,11 +66,11 @@ public class FileAtributes {
         this.modifiedTime = modifiedTime;
     }
 
-    public String getCreationTime() {
+    public long getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(String creationTime) {
+    public void setCreationTime(long creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -176,7 +179,14 @@ public class FileAtributes {
             colorCode = Writer.ANSI_ESC + Writer.COLOR_YELLOW + "m";
         }
 
-        return String.join("", Collections.nCopies(level, separate)) + colorCode + fileName;
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        String dateCreated = df.format(creationTime);
+
+        return String.join("", Collections.nCopies(level, separate))
+                + colorCode
+                + fileName
+                + " " + dateCreated
+                + " " + String.format("%,d", fileSize).replace(",", ".");
     }
 
 }

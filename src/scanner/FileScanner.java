@@ -48,7 +48,7 @@ public class FileScanner {
             attributes = Files.readAttributes(Paths.get(file.getPath()), BasicFileAttributes.class);
 
             FileAtributes attr = new FileAtributes(
-                        attributes.creationTime().toString(),
+                        attributes.creationTime().toMillis(),
                         file.getName(),
                         file.isDirectory()?directory_key:file_key,
                         attributes.size(),
