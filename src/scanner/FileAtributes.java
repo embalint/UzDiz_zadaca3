@@ -1,6 +1,9 @@
 package scanner;
 
+import iterator.ItemContainer;
+import iterator.Iterator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,18 +11,23 @@ import java.util.List;
  */
 public class FileAtributes {
 
+    private static String separate="  ";
+
     private String creationTime;
     private String fileName;
     private String filetype;
     private String modifiedTime;
     private String parent;
+    private int level;
 
     private Long fileSize;
-    private List<FileAtributes> childrens;
+    private ItemContainer container=new ItemContainer();
 
     public FileAtributes() {
     }
 
+     
+     
     public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent,List<FileAtributes> childrens) {
         this.creationTime = creationTime;
         this.fileName = fileName;
@@ -27,19 +35,28 @@ public class FileAtributes {
         this.fileSize = fileSize;
         this.modifiedTime = modifiedTime;
         this.parent=parent;
-        this.childrens = childrens;
+        container.addItems(childrens);
     }
     
-    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime,String parent) {
+    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime,String parent,int level) {
         this.creationTime = creationTime;
         this.fileName = fileName;
         this.filetype = filetype;
         this.fileSize = fileSize;
         this.modifiedTime = modifiedTime;
         this.parent=parent;
-        this.childrens=new ArrayList();
+        this.level=level;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    
     public String getModifiedTime() {
         return modifiedTime;
     }
@@ -81,14 +98,14 @@ public class FileAtributes {
     }
 
     public List<FileAtributes> getChildrens() {
-        return childrens;
+        return container.getItems();
     }
 
     public void setChildrens(List<FileAtributes> childrens) {
-        this.childrens = childrens;
+        container.addItems(childrens);
     }
     public void addChildren(FileAtributes children) {
-        this.childrens.add(children);
+        container.addItem(children);
     }
 
     public String getParent() {
@@ -101,15 +118,25 @@ public class FileAtributes {
     
     public ArrayList<String> getStrings(){
         ArrayList<String> strings=new ArrayList<String>();
-        for(FileAtributes item:childrens)
-            strings.add(item.toString());
+        strings.add(this.toString());
+        Iterator iterator=container.getIterator();
+        while(iterator.hasNext()){
+            FileAtributes item=iterator.next();
+            if(item.getChildrens().size()>0)
+                strings.addAll(item.getStrings());
+            else{
+                strings.add(item.toString());
+            }
+        }
         return strings;
     }
     
     @Override
     public String toString() {
-        return "File: " +"name=" + fileName + ", type=" + filetype + ", size=" + fileSize +  ", created=" + creationTime +", modified=" + modifiedTime + '}';
+                return String.join("", Collections.nCopies(level, separate))+fileName;
+//        return "File: " +"name=" + fileName + ", type=" + filetype + ", size=" + fileSize +  ", created=" + creationTime +", modified=" + modifiedTime + '}';
     }
     
 
 }
+

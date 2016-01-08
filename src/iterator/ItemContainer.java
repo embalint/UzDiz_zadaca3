@@ -22,6 +22,7 @@ public class ItemContainer implements Container{
     }
 
     public ItemContainer() {
+        this.items=new ArrayList();
     }
    
     

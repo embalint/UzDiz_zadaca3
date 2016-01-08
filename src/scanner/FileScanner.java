@@ -39,7 +39,7 @@ public class FileScanner {
         ArrayList<FileAtributes> fileTree = new ArrayList<FileAtributes>();
         for (File entry : dir.listFiles()) {
           //  fileTree.add(String.join("", Collections.nCopies(level, separate))+entry);
-            FileAtributes file=getFile(entry);
+            FileAtributes file=getFile(entry,level);
               fileTree.add(file);
             if (!entry.isFile()) 
                 file.setChildrens(listFileTree(entry,level+1));
@@ -47,7 +47,7 @@ public class FileScanner {
         return fileTree;
     }
     
-    public FileAtributes getFile(File file){
+    public FileAtributes getFile(File file,int level){
         BasicFileAttributes attributes;
         try {
             attributes = Files.readAttributes(Paths.get(file.getPath()), BasicFileAttributes.class);
@@ -58,7 +58,8 @@ public class FileScanner {
                         file.isDirectory()?"directory":"file",
                         attributes.size(),
                         attributes.lastModifiedTime().toString(),
-                    file.getParent()
+                    file.getParent(),
+                    level
             );
             return attr;
        } catch (IOException ex) {
