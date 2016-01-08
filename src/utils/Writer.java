@@ -8,7 +8,7 @@ package utils;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.geometry.Pos;
+import registry.Registry;
 import view.Frame;
 import view.Position;
 
@@ -17,6 +17,11 @@ import view.Position;
  * @author ahuskano
  */
 public class Writer {
+
+    public static final String COLOR_GREEN = "32";
+    public static final String COLOR_YELLOW = "33";
+    public static final String COLOR_BLACK = "30";
+    public static final String COLOR_WHITE = "37";
 
     private static final String VERTICAL_LINE = "|";
     private static final String HORIZONTAL_LINE = "=";
@@ -51,11 +56,22 @@ public class Writer {
     }
 
     public static void printInFrame(Frame frame, String content) {
+        refreshColor();
         print(content, frame.getSettings().getX(), frame.getSettings().getY());
+    }
+
+    public static void refreshColor() {
+        boolean flag = (boolean) Registry.getInstance().get("thread.scan.active");
+        if (flag) {
+            setColor(Writer.COLOR_GREEN);
+        } else {
+            setColor(Writer.COLOR_YELLOW);
+        }
     }
 
     public static void printInFrame(Frame frame, ArrayList<String> content) {
 
+        refreshColor();
         int line = 0;
 
         ArrayList<String> splitContent = new ArrayList<>();
@@ -118,6 +134,10 @@ public class Writer {
                 writerNextPosition.getX(),
                 writerNextPosition.getY()
         );
+    }
+
+    public static void setColor(String color) {
+        System.out.print(ANSI_ESC + color + "m");
     }
 
 }

@@ -33,10 +33,12 @@ public class InputController extends Controller {
 
             Writer.clear((Frame) this.get("frame.input"));
             Writer.resetPosition();
+
+            boolean flag;
+            
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
-            boolean flag;
             switch (choice) {
                 case "1":
                     break;
