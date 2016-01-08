@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import utils.Writer;
-import static utils.Writer.getActiveColor;
 
 /**
  * @author Emil
