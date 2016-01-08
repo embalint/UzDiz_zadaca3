@@ -5,6 +5,7 @@
  */
 package controller;
 
+import iterator.ItemContainer;
 import java.util.ArrayList;
 import model.Model;
 import newFunctionality.TotalArea;
@@ -46,8 +47,11 @@ public class InputController extends Controller {
 
                 case "2":
                     FileScanner fs = new FileScanner();
-                    //ArrayList<String> fileList = fs.getFileList();
-                    //((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                    ItemContainer iterator=new ItemContainer();
+                    iterator.setItems(fs.getFileList());
+                
+                    ArrayList<String> fileList = iterator.getStrings();                    
+                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                     break;
 
                 case "3":
