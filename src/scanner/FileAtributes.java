@@ -116,6 +116,10 @@ public class FileAtributes {
         this.parent = parent;
     }
     
+    public boolean isDirectory(){
+        return this.filetype.equals(FileScanner.directory_key) ? true : false;
+    }
+    
     public ArrayList<String> getStrings(){
         ArrayList<String> strings=new ArrayList<String>();
         strings.add(this.toString());
@@ -129,6 +133,37 @@ public class FileAtributes {
             }
         }
         return strings;
+    }
+    
+    public int getDirectoriesNumber(){
+        int number=this.filetype.equals(FileScanner.directory_key)? 1 : 0;
+        Iterator iterator=container.getIterator();
+        while(iterator.hasNext()){
+            FileAtributes item=iterator.next();
+            if(item.getChildrens().size()>0)
+                number+=item.getDirectoriesNumber();
+            else{
+                if(item.isDirectory())
+                    number+=1;
+            }
+        }
+        return number;
+    }
+    
+    
+    public int getFilesNumber(){
+        int number=this.filetype.equals(FileScanner.directory_key)? 0 : 1;
+        Iterator iterator=container.getIterator();
+        while(iterator.hasNext()){
+            FileAtributes item=iterator.next();
+            if(item.getChildrens().size()>0)
+                number+=item.getDirectoriesNumber();
+            else{
+                if(!item.isDirectory())
+                    number+=1;
+            }
+        }
+        return number;
     }
     
     @Override

@@ -76,6 +76,24 @@ public class ItemContainer implements Container{
         items=orginator.getState();
     }
     
+    public int getDirectoriesNumber(){
+        int number=0;
+        Iterator iterator=getIterator();
+        while(iterator.hasNext()){
+            number+=iterator.next().getDirectoriesNumber();
+        }
+        return number;
+    }
+    
+    
+    public int getFilesNumber(){
+        int number=0;
+        Iterator iterator=getIterator();
+        while(iterator.hasNext()){
+            number+=iterator.next().getFilesNumber();
+        }
+        return number;
+    }
     public class ItemsIterator implements Iterator {
 
        private int index;
@@ -85,7 +103,8 @@ public class ItemContainer implements Container{
             if(index < items.size()){
                 return true;
              }
-             return false;    }
+             return false;   
+        }
 
         @Override
         public FileAtributes next() {

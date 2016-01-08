@@ -30,6 +30,8 @@ import registry.Registry;
  * @author Emil
  */
 public class FileScanner {
+    public static String directory_key="directory";
+    public static String file_key="file";
     
     private static String separate="  ";
 
@@ -55,7 +57,7 @@ public class FileScanner {
             FileAtributes attr = new FileAtributes(
                         attributes.creationTime().toString(),
                         file.getName(),
-                        file.isDirectory()?"directory":"file",
+                        file.isDirectory()?directory_key:file_key,
                         attributes.size(),
                         attributes.lastModifiedTime().toString(),
                     file.getParent(),
