@@ -28,4 +28,12 @@ public class MementoHandler {
         return mementoList.size();
     }
     
+    public ArrayList<String> getMementoInfo(){
+        ArrayList<String> mementos=new ArrayList();
+        for(int i=0;i<size();i++){
+            Memento memento=mementoList.get(i);
+            mementos.add(i+1+"."+memento.getTime());
+        }
+        return mementos;
+    }
 }

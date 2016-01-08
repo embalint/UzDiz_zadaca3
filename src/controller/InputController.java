@@ -6,7 +6,10 @@
 package controller;
 
 import iterator.ItemContainer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import model.Model;
 import newFunctionality.TotalArea;
@@ -60,7 +63,7 @@ public class InputController extends Controller {
                     infoData.add("Directories: " + container.getDirectoriesNumber());
                     infoData.add("Files: " + container.getFilesNumber());
                     ((Model) Registry.getInstance().get("model.info")).setBuffer(infoData);
-
+                    
                     break;
 
                 case "2":
@@ -81,6 +84,8 @@ public class InputController extends Controller {
                     break;
 
                 case "5":
+                    
+                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(container.getMementoInfo());
                     break;
 
                 case "6":
@@ -93,6 +98,7 @@ public class InputController extends Controller {
 
                 case "8":
                     container.setItems(fs.getFileList());
+                    container.saveToMemento();
                     ((Model) Registry.getInstance().get("model.structure")).setBuffer(container.getStrings());
                     break;
 

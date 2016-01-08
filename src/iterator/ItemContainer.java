@@ -32,7 +32,7 @@ public class ItemContainer implements Container{
     
     @Override
     public Iterator getIterator() {
-          return new ItemsIterator();
+          return new ItemsIterator(this.items);
     }
 
     public List<FileAtributes> getItems() {
@@ -85,6 +85,9 @@ public class ItemContainer implements Container{
         return number;
     }
     
+    public ArrayList<String> getMementoInfo(){
+        return handler.getMementoInfo();
+    }
     
     public int getFilesNumber(){
         int number=0;
@@ -94,25 +97,5 @@ public class ItemContainer implements Container{
         }
         return number;
     }
-    public class ItemsIterator implements Iterator {
 
-       private int index;
-
-        @Override
-        public boolean hasNext() {
-            if(index < items.size()){
-                return true;
-             }
-             return false;   
-        }
-
-        @Override
-        public FileAtributes next() {
-            if(this.hasNext()){
-                return items.get(index++);
-             }
-             return null;
-        }
-
-    }
 }
