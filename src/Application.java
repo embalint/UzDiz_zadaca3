@@ -2,6 +2,7 @@
 import controller.FileScanController;
 import controller.InputController;
 import controller.ViewController;
+import iterator.ItemContainer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Model;
@@ -33,7 +34,7 @@ public class Application {
         Registry.getInstance().set("model.info", new Model());
         Registry.getInstance().set("model.input", new Model());
         Registry.getInstance().set("thread.scan.active", false);
-
+        Registry.getInstance().set("model.structure.iterator", new ItemContainer());
     }
 
     private Object get(String key) {

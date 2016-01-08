@@ -7,6 +7,7 @@ package controller;
 
 import iterator.ItemContainer;
 import java.util.ArrayList;
+import java.util.List;
 import model.Model;
 import newFunctionality.TotalArea;
 import registry.Registry;
@@ -48,18 +49,23 @@ public class InputController extends Controller {
             Writer.colorStack.pop();
             
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
+            FileScanner fs = new FileScanner();
+            ((Model) Registry.getInstance().get("model.info")).setString("Scan started");
+            ItemContainer container=(ItemContainer) Registry.getInstance().get("model.structure.iterator");
             
             switch (choice) {
                 case "1":
+                    container.setItems(fs.getFileList());  
+                    ArrayList<String> infoData=new ArrayList();
+                    infoData.add("Directories: "+ container.getDirectoriesNumber());
+                    infoData.add("Files: "+ container.getFilesNumber());
+                    ((Model) Registry.getInstance().get("model.info")).setBuffer(infoData);
+                    
                     break;
                 
                 case "2":
-                    FileScanner fs = new FileScanner();
-                    ItemContainer iterator = new ItemContainer();
-                    iterator.setItems(fs.getFileList());
-                    
-                    ArrayList<String> fileList = iterator.getStrings();
-                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                    container.setItems(fs.getFileList());  
+                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(container.getStrings());
                     break;
                 
                 case "3":

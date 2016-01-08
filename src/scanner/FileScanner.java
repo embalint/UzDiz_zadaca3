@@ -22,8 +22,10 @@ import registry.Registry;
  * @author Emil
  */
 public class FileScanner {
-
-    private static String separate = "  ";
+    public static String directory_key="directory";
+    public static String file_key="file";
+    
+    private static String separate="  ";
 
     File actual = new File((String) Registry.getInstance().get("filepath"));
 
@@ -46,11 +48,11 @@ public class FileScanner {
             attributes = Files.readAttributes(Paths.get(file.getPath()), BasicFileAttributes.class);
 
             FileAtributes attr = new FileAtributes(
-                    attributes.creationTime().toString(),
-                    file.getName(),
-                    file.isDirectory() ? "directory" : "file",
-                    attributes.size(),
-                    attributes.lastModifiedTime().toString(),
+                        attributes.creationTime().toString(),
+                        file.getName(),
+                        file.isDirectory()?directory_key:file_key,
+                        attributes.size(),
+                        attributes.lastModifiedTime().toString(),
                     file.getParent(),
                     level
             );
