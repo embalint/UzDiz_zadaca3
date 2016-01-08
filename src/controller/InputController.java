@@ -15,6 +15,7 @@ import model.Model;
 import newFunctionality.TotalArea;
 import registry.Registry;
 import scanner.FileScanner;
+import utils.Comparator;
 import utils.Reader;
 import utils.Settings;
 import utils.Writer;
@@ -113,13 +114,14 @@ public class InputController extends Controller {
                     if (choice.contains("6 ")) {
                         choice = choice.replace("6 ", "");
                         ((Model) Registry.getInstance().get("model.info")).setString("Set to: " + choice);
-
+                        container.retriveFromMemento(Integer.valueOf(choice)-1);
                     }
 
                     if (choice.contains("7 ")) {
                         choice = choice.replace("7 ", "");
                         ((Model) Registry.getInstance().get("model.info")).setString("Compare current to: " + choice);
-
+                        ArrayList<String> buffer=Comparator.compare(container.getFromMemento(Integer.valueOf(choice)-1),container.getItems());
+                        ((Model) Registry.getInstance().get("model.structure")).setBuffer(buffer);
                     }
 
             }

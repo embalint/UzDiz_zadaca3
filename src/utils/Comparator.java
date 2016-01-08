@@ -19,18 +19,19 @@ import scanner.FileAtributes;
  */
 public class Comparator {
     
-    public static ArrayList<String> compare(ArrayList<FileAtributes> oldList, ArrayList<FileAtributes> newList){
+    public static ArrayList<String> compare(List<FileAtributes> oldList, List<FileAtributes> newList){
         ArrayList<String> difference=new ArrayList();
-        Iterator oldIterator=new ItemsIterator(oldList);
         Iterator newIterator=new ItemsIterator(newList);
          while(newIterator.hasNext()){
              FileAtributes newItem=newIterator.next();
+             Iterator oldIterator=new ItemsIterator(oldList);
              while(oldIterator.hasNext()){
                  FileAtributes oldItem=oldIterator.next();
                  if(newItem.getFileName().equals(oldItem.getFileName())){
                      String msg=compareFiles(oldItem, newItem);
                      if(msg!=null)
                          difference.add(msg);
+                     break;
                  }
              }
          } 
@@ -39,11 +40,10 @@ public class Comparator {
 
     public static String compareFiles(FileAtributes oldFile, FileAtributes newFile){
         if(newFile.getCreationTime()!=oldFile.getCreationTime()){
-            return "Different creation time";
-        }else if(newFile.getModifiedTime()!=oldFile.getModifiedTime()){
-            return "FIle is modified";
+            return newFile.getFileName()+" Different creation time";
+        
         }else if(newFile.getFileSize()!=oldFile.getFileSize()){
-            return "FIle size changed";
+            return newFile.getFileName()+ " FIle size changed";
         }
         return null;
     }

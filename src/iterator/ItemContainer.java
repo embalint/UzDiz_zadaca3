@@ -71,9 +71,11 @@ public class ItemContainer implements Container{
     }
 
     public void retriveFromMemento(int index){
-        saveToMemento();
+        if(index>handler.size() && index<0)
+            return;
         orginator.getStateFromMemento(handler.getmemento(index));
         items=orginator.getState();
+        
     }
     
     public int getDirectoriesNumber(){
@@ -98,4 +100,9 @@ public class ItemContainer implements Container{
         return number;
     }
 
+    public List<FileAtributes> getFromMemento(int index){
+        if(index> handler.size() && index<0)
+            return null;
+        return handler.getmemento(index).getState();
+    }
 }
