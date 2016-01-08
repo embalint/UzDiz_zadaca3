@@ -5,13 +5,15 @@ import iterator.Iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import utils.Writer;
+import static utils.Writer.getActiveColor;
 
 /**
  * @author Emil
  */
 public class FileAtributes {
 
-    private static String separate="  ";
+    private static String separate = "  ";
 
     private String creationTime;
     private String fileName;
@@ -21,31 +23,29 @@ public class FileAtributes {
     private int level;
 
     private Long fileSize;
-    private ItemContainer container=new ItemContainer();
+    private ItemContainer container = new ItemContainer();
 
     public FileAtributes() {
     }
 
-     
-     
-    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent,List<FileAtributes> childrens) {
+    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, List<FileAtributes> childrens) {
         this.creationTime = creationTime;
         this.fileName = fileName;
         this.filetype = filetype;
         this.fileSize = fileSize;
         this.modifiedTime = modifiedTime;
-        this.parent=parent;
+        this.parent = parent;
         container.addItems(childrens);
     }
-    
-    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime,String parent,int level) {
+
+    public FileAtributes(String creationTime, String fileName, String filetype, Long fileSize, String modifiedTime, String parent, int level) {
         this.creationTime = creationTime;
         this.fileName = fileName;
         this.filetype = filetype;
         this.fileSize = fileSize;
         this.modifiedTime = modifiedTime;
-        this.parent=parent;
-        this.level=level;
+        this.parent = parent;
+        this.level = level;
     }
 
     public int getLevel() {
@@ -56,7 +56,6 @@ public class FileAtributes {
         this.level = level;
     }
 
-    
     public String getModifiedTime() {
         return modifiedTime;
     }
@@ -104,6 +103,7 @@ public class FileAtributes {
     public void setChildrens(List<FileAtributes> childrens) {
         container.addItems(childrens);
     }
+
     public void addChildren(FileAtributes children) {
         container.addItem(children);
     }
@@ -115,63 +115,69 @@ public class FileAtributes {
     public void setParent(String parent) {
         this.parent = parent;
     }
-    
-    public boolean isDirectory(){
+
+    public boolean isDirectory() {
         return this.filetype.equals(FileScanner.directory_key) ? true : false;
     }
-    
-    public ArrayList<String> getStrings(){
-        ArrayList<String> strings=new ArrayList<String>();
+
+    public ArrayList<String> getStrings() {
+        ArrayList<String> strings = new ArrayList<String>();
         strings.add(this.toString());
-        Iterator iterator=container.getIterator();
-        while(iterator.hasNext()){
-            FileAtributes item=iterator.next();
-            if(item.getChildrens().size()>0)
+        Iterator iterator = container.getIterator();
+        while (iterator.hasNext()) {
+            FileAtributes item = iterator.next();
+            if (item.getChildrens().size() > 0) {
                 strings.addAll(item.getStrings());
-            else{
+            } else {
                 strings.add(item.toString());
             }
         }
         return strings;
     }
-    
-    public int getDirectoriesNumber(){
-        int number=this.filetype.equals(FileScanner.directory_key)? 1 : 0;
-        Iterator iterator=container.getIterator();
-        while(iterator.hasNext()){
-            FileAtributes item=iterator.next();
-            if(item.getChildrens().size()>0)
-                number+=item.getDirectoriesNumber();
-            else{
-                if(item.isDirectory())
-                    number+=1;
+
+    public int getDirectoriesNumber() {
+        int number = this.filetype.equals(FileScanner.directory_key) ? 1 : 0;
+        Iterator iterator = container.getIterator();
+        while (iterator.hasNext()) {
+            FileAtributes item = iterator.next();
+            if (item.getChildrens().size() > 0) {
+                number += item.getDirectoriesNumber();
+            } else {
+                if (item.isDirectory()) {
+                    number += 1;
+                }
             }
         }
         return number;
     }
-    
-    
-    public int getFilesNumber(){
-        int number=this.filetype.equals(FileScanner.directory_key)? 0 : 1;
-        Iterator iterator=container.getIterator();
-        while(iterator.hasNext()){
-            FileAtributes item=iterator.next();
-            if(item.getChildrens().size()>0)
-                number+=item.getDirectoriesNumber();
-            else{
-                if(!item.isDirectory())
-                    number+=1;
+
+    public int getFilesNumber() {
+        int number = this.filetype.equals(FileScanner.directory_key) ? 0 : 1;
+        Iterator iterator = container.getIterator();
+        while (iterator.hasNext()) {
+            FileAtributes item = iterator.next();
+            if (item.getChildrens().size() > 0) {
+                number += item.getFilesNumber();
+            } else {
+                if (!item.isDirectory()) {
+                    number += 1;
+                }
             }
         }
         return number;
     }
-    
+
     @Override
     public String toString() {
-                return String.join("", Collections.nCopies(level, separate))+fileName;
-//        return "File: " +"name=" + fileName + ", type=" + filetype + ", size=" + fileSize +  ", created=" + creationTime +", modified=" + modifiedTime + '}';
+        String colorCode = "";
+
+        if (isDirectory()) {
+            colorCode = Writer.ANSI_ESC + Writer.COLOR_GREEN + "m";
+        } else {
+            colorCode = Writer.ANSI_ESC + Writer.COLOR_YELLOW + "m";
+        }
+
+        return String.join("", Collections.nCopies(level, separate)) + colorCode + fileName;
     }
-    
 
 }
-

@@ -67,7 +67,7 @@ public class Writer {
 
     private static void print(String text, int x, int y) {
         position(x, y);
-        System.out.print(ANSI_ESC + getActiveColor()+ "m");
+        System.out.print(ANSI_ESC + getActiveColor() + "m");
         System.out.print(text);
     }
 
@@ -94,9 +94,11 @@ public class Writer {
                 Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if (startLine + 1 >= frame.getSettings().getY() + 1 + frame.getSettings().getHeight()) {
+            if (startLine + 1 >= frame.getSettings().getY() + frame.getSettings().getHeight()) {
                 line = 0;
                 clear(frame);
+                frame.showBorders();
+
             } else {
                 line++;
             }
@@ -113,7 +115,7 @@ public class Writer {
     }
 
     public static void clear(Frame frame) {
-        for (int i = frame.getSettings().getY(); i < frame.getSettings().getY() + frame.getSettings().getHeight(); i++) {
+        for (int i = frame.getSettings().getY() + 1; i < frame.getSettings().getY() + frame.getSettings().getHeight(); i++) {
 
             if (frame.getSettings().getX() > 1) {
                 // Delete till end
