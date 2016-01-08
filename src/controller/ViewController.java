@@ -16,16 +16,15 @@ public class ViewController extends Controller {
     public ViewController() {
 
         Writer.clear();
-        
+
         FrameFactory factory = (FrameFactory) this.get("frame.factory");
 
         inputFrame = factory.makeInputFrame();
+        ((Model) this.get("model.input")).addObserver(inputFrame);
         Registry.getInstance().set("frame.input", inputFrame);
-        Writer.writerNextPosition = inputFrame.getWriterStartPosition();
 
         this.outputFrames.add(factory.makeFrame(1, (Model) this.get("model.structure")));
         this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.info")));
-        //this.outputFrames.add(factory.makeFrame(2, (Model) this.get("model.structure")));
 
     }
 
@@ -37,6 +36,7 @@ public class ViewController extends Controller {
         }
 
         inputFrame.render();
+        Writer.position(inputFrame.getWriterStartPosition());
 
     }
 

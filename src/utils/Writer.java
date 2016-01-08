@@ -6,6 +6,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import registry.Registry;
@@ -34,6 +35,10 @@ public class Writer {
         System.out.print(ANSI_ESC + y + ";" + x + "f");
     }
 
+    public static void position(Position p) {
+        position(p.getX(), p.getY());
+    }
+
     public static void printVerticalLine(int x, int start, int end) {
         for (int i = start; i <= end; i++) {
             print(VERTICAL_LINE, x, i);
@@ -44,34 +49,27 @@ public class Writer {
         System.out.print(ANSI_ESC + "2J");
     }
 
+    public static void savePosition() {
+        System.out.print("\0337");
+    }
+
+    public static void restorePosition() {
+        System.out.print("\0338");
+    }
+
     public static void printHorizontalLine(int y, int start, int end) {
         for (int i = start; i <= end; i++) {
             print(HORIZONTAL_LINE, i, y);
         }
     }
 
-    public static void print(String text, int x, int y) {
+    private static void print(String text, int x, int y) {
         position(x, y);
+        System.out.print(ANSI_ESC + Registry.getInstance().get("color") + "m");
         System.out.print(text);
     }
 
-    public static void printInFrame(Frame frame, String content) {
-        refreshColor();
-        print(content, frame.getSettings().getX(), frame.getSettings().getY());
-    }
-
-    public static void refreshColor() {
-        boolean flag = (boolean) Registry.getInstance().get("thread.scan.active");
-        if (flag) {
-            setColor(Writer.COLOR_GREEN);
-        } else {
-            setColor(Writer.COLOR_YELLOW);
-        }
-    }
-
     public static void printInFrame(Frame frame, ArrayList<String> content) {
-
-        refreshColor();
         int line = 0;
 
         ArrayList<String> splitContent = new ArrayList<>();
@@ -124,20 +122,6 @@ public class Writer {
                 position(frame.getSettings().getX() + frame.getSettings().getWidth(), i);
                 clearToCursor();
             }
-
-            frame.showBorders();
         }
     }
-
-    public static void resetPosition() {
-        position(
-                writerNextPosition.getX(),
-                writerNextPosition.getY()
-        );
-    }
-
-    public static void setColor(String color) {
-        System.out.print(ANSI_ESC + color + "m");
-    }
-
 }

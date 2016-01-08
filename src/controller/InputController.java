@@ -30,15 +30,14 @@ public class InputController extends Controller {
 
     public void work() {
         String choice = "";
+        boolean flag;
 
         do {
 
-            Writer.clear((Frame) this.get("frame.input"));
-            Writer.resetPosition();
+            ((Frame) this.get("frame.input")).clearAndShowBorders();
+            Writer.position(((Frame) this.get("frame.input")).getWriterStartPosition());
 
-            boolean flag;
-
-            choice = Reader.read("Menu item: ");
+            choice = Reader.read();
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
             switch (choice) {
@@ -47,10 +46,10 @@ public class InputController extends Controller {
 
                 case "2":
                     FileScanner fs = new FileScanner();
-                    ItemContainer iterator=new ItemContainer();
+                    ItemContainer iterator = new ItemContainer();
                     iterator.setItems(fs.getFileList());
-                
-                    ArrayList<String> fileList = iterator.getStrings();                    
+
+                    ArrayList<String> fileList = iterator.getStrings();
                     ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                     break;
 

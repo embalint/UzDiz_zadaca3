@@ -31,6 +31,7 @@ public class Application {
     private void setup() {
         Registry.getInstance().set("model.structure", new Model());
         Registry.getInstance().set("model.info", new Model());
+        Registry.getInstance().set("model.input", new Model());
         Registry.getInstance().set("thread.scan.active", false);
 
     }
@@ -42,7 +43,7 @@ public class Application {
     public void start() {
 
         setup();
-        
+
         Thread uiThread = new Thread(new ViewController(), "thread.view");
         uiThread.start();
 
