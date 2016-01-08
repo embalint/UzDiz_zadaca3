@@ -50,7 +50,7 @@ public class InputController extends Controller {
 
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
             FileScanner fs = new FileScanner();
-            
+
             ItemContainer container = (ItemContainer) Registry.getInstance().get("model.structure.iterator");
 
             switch (choice) {
@@ -84,9 +84,11 @@ public class InputController extends Controller {
                     break;
 
                 case "6":
+                    ((Model) Registry.getInstance().get("model.info")).setString("Provide value in format 6 M");
                     break;
 
                 case "7":
+                    ((Model) Registry.getInstance().get("model.info")).setString("Provide value in format 7 N");
                     break;
 
                 case "8":
@@ -99,6 +101,20 @@ public class InputController extends Controller {
                     ((Model) Registry.getInstance().get("model.info")).setString("Total area of all shapes " + total.totalArea());
 
                     break;
+
+                default:
+
+                    if (choice.contains("6 ")) {
+                        choice = choice.replace("6 ", "");
+                        ((Model) Registry.getInstance().get("model.info")).setString("Set to: " + choice);
+
+                    }
+
+                    if (choice.contains("7 ")) {
+                        choice = choice.replace("7 ", "");
+                        ((Model) Registry.getInstance().get("model.info")).setString("Compare current to: " + choice);
+
+                    }
 
             }
         } while (choice != "Q");
