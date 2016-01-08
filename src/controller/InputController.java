@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import model.Model;
+import newFunctionality.TotalArea;
 import registry.Registry;
 import scanner.FileScanner;
 import utils.Reader;
@@ -35,7 +36,7 @@ public class InputController extends Controller {
             Writer.resetPosition();
 
             boolean flag;
-            
+
             choice = Reader.read("Menu item: ");
             ((Model) Registry.getInstance().get("model.info")).setString(choice);
 
@@ -45,8 +46,8 @@ public class InputController extends Controller {
 
                 case "2":
                     FileScanner fs = new FileScanner();
-                    ArrayList<String> fileList = fs.getFileList();
-                    ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                    //ArrayList<String> fileList = fs.getFileList();
+                    //((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                     break;
 
                 case "3":
@@ -75,6 +76,9 @@ public class InputController extends Controller {
                     break;
 
                 case "9":
+                    TotalArea total = new TotalArea();
+                    ((Model) Registry.getInstance().get("model.info")).setString("Total area of all shapes " + total.totalArea());
+
                     break;
 
             }
