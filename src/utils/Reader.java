@@ -15,17 +15,11 @@ import java.io.InputStreamReader;
  */
 public class Reader {
 
-    public static String read(String prompt) {
+    public static String read() {
 
-        System.out.print(prompt);
-
-        //  open up standard input
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         String input = null;
 
-        //  read the username from the command-line; need to use try/catch with the
-        //  readLine() method
         try {
             input = br.readLine();
         } catch (IOException ioe) {

@@ -32,7 +32,6 @@ public class Frame implements Observer {
     }
 
     public void showBorders() {
-        Writer.refreshColor();
         int x1 = getSettings().getX();
         int y1 = getSettings().getY();
         int x2 = x1 + getSettings().getWidth();
@@ -44,22 +43,43 @@ public class Frame implements Observer {
         Writer.printVerticalLine(x2, y1, y2);
     }
 
+    private void save() {
+        Writer.savePosition();
+        Writer.colorStack.add(Writer.COLOR_WHITE);
+    }
+
+    private void restore() {
+        Writer.restorePosition();
+        Writer.colorStack.pop();
+        Writer.printColorCode(Writer.getActiveColor());
+    }
+
     public void clear() {
-        int x1 = getSettings().getX();
-        int y1 = getSettings().getY();
-        int x2 = x1 + getSettings().getWidth();
-        int y2 = y1 + getSettings().getHeight();
+        save();
+        Writer.clear(this);
+        restore();
+    }
+
+    public void clearAndShowBorders() {
+        save();
+        Writer.clear(this);
+        showBorders();
+        restore();
     }
 
     public void render() {
+        save();
         showBorders();
+        restore();
     }
 
     public void render(Model model) {
-        showBorders();
+        save();
         Writer.clear(this);
+        showBorders();
         Writer.printInFrame(this, model.getBuffer());
-        Writer.resetPosition();
+        restore();
+
     }
 
     public void update(Observable obs, Object obj) {

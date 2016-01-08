@@ -32,6 +32,7 @@ public class Application {
     private void setup() {
         Registry.getInstance().set("model.structure", new Model());
         Registry.getInstance().set("model.info", new Model());
+        Registry.getInstance().set("model.input", new Model());
         Registry.getInstance().set("thread.scan.active", false);
         Registry.getInstance().set("model.structure.iterator", new ItemContainer());
     }
@@ -43,7 +44,7 @@ public class Application {
     public void start() {
 
         setup();
-        
+
         Thread uiThread = new Thread(new ViewController(), "thread.view");
         uiThread.start();
 
@@ -51,7 +52,7 @@ public class Application {
         scanThread.start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -2,6 +2,7 @@
 import registry.Registry;
 import utils.ArgumentValidator;
 import utils.Settings;
+import utils.Writer;
 import view.FrameFactory;
 
 /*
@@ -25,6 +26,7 @@ public class Main {
         if (val.Validation() == true) {
 
             Registry.getInstance().set("filepath", args[3]);
+            Writer.colorStack.add(Writer.COLOR_WHITE);
 
             Settings settings = new Settings(
                     1,
