@@ -26,10 +26,10 @@ public class FileScanController extends Controller {
 
                 ((Model) Registry.getInstance().get("model.info")).setString("Scan started");
                 ItemContainer iterator=new ItemContainer();
-                //iterator.setItems(fs.getFileList());
+              iterator.setItems(fs.getFileList());
                 
-                // ArrayList<String> fileList = iterator.getStrings();
-               // ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+               ArrayList<String> fileList = iterator.getStrings();
+               ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                 ((Model) Registry.getInstance().get("model.info")).setString("Scan finished");
 
                 try {

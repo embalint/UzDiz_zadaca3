@@ -22,14 +22,16 @@ public class ItemContainer implements Container{
     }
 
     public ItemContainer() {
+        this.items=new ArrayList();
     }
    
     
     @Override
     public Iterator getIterator() {
-          return new ItemsIterator();
+          return new ItemIterator();
     }
-
+    
+    
     public List<FileAtributes> getItems() {
         return items;
     }
@@ -55,7 +57,7 @@ public class ItemContainer implements Container{
         this.items.add(item);
     }
     
-    public class ItemsIterator implements Iterator {
+    public class ItemIterator implements Iterator {
 
        private int index;
 
@@ -75,4 +77,4 @@ public class ItemContainer implements Container{
         }
 
     }
-}
+ }
