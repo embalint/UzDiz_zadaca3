@@ -1,5 +1,6 @@
 package controller;
 
+import iterator.ItemContainer;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,8 +25,11 @@ public class FileScanController extends Controller {
             if (flag) {
 
                 ((Model) Registry.getInstance().get("model.info")).setString("Scan started");
-                ArrayList<String> fileList = fs.getFileList();
-                ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
+                ItemContainer iterator=new ItemContainer();
+                //iterator.setItems(fs.getFileList());
+                
+                // ArrayList<String> fileList = iterator.getStrings();
+               // ((Model) Registry.getInstance().get("model.structure")).setBuffer(fileList);
                 ((Model) Registry.getInstance().get("model.info")).setString("Scan finished");
 
                 try {
