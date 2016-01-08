@@ -26,7 +26,7 @@ public class Main {
         if (val.Validation() == true) {
 
             Registry.getInstance().set("filepath", args[3]);
-            Registry.getInstance().set("color", Writer.COLOR_WHITE);
+            Writer.colorStack.add(Writer.COLOR_WHITE);
 
             Settings settings = new Settings(
                     1,

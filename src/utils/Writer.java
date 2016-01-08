@@ -19,6 +19,8 @@ import view.Position;
  */
 public class Writer {
 
+    public volatile static Stack<String> colorStack = new Stack<>();
+
     public static final String COLOR_GREEN = "32";
     public static final String COLOR_YELLOW = "33";
     public static final String COLOR_BLACK = "30";
@@ -65,7 +67,7 @@ public class Writer {
 
     private static void print(String text, int x, int y) {
         position(x, y);
-        System.out.print(ANSI_ESC + Registry.getInstance().get("color") + "m");
+        System.out.print(ANSI_ESC + getActiveColor()+ "m");
         System.out.print(text);
     }
 
@@ -122,6 +124,18 @@ public class Writer {
                 position(frame.getSettings().getX() + frame.getSettings().getWidth(), i);
                 clearToCursor();
             }
+        }
+    }
+
+    public static void printColorCode(String color) {
+        System.out.print(ANSI_ESC + color + "m");
+    }
+
+    public static String getActiveColor() {
+        if (colorStack.empty()) {
+            return Writer.COLOR_WHITE;
+        } else {
+            return colorStack.lastElement();
         }
     }
 }
