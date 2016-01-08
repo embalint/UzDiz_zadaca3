@@ -157,7 +157,7 @@ public class FileAtributes {
         while(iterator.hasNext()){
             FileAtributes item=iterator.next();
             if(item.getChildrens().size()>0)
-                number+=item.getDirectoriesNumber();
+                number+=item.getFilesNumber();
             else{
                 if(!item.isDirectory())
                     number+=1;
